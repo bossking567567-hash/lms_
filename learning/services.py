@@ -19,7 +19,7 @@ from .models import Submission, Homework, Lesson
 
 
 def is_lesson_unlocked(student, lesson):
-    # birinchi lesson har doim ochiq
+
     if lesson.order == 1:
         return True
 
