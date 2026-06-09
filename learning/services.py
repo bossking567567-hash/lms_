@@ -1,56 +1,89 @@
-from .models import Submission, Homework, Lesson, Progress
+from .models import Homework, Submission, Progress
+
+def is_lesson_unlocked(user, lesson):
+    """
+    Lesson ochiqmi yoki yo‘qmi tekshiradi
+    """
 
 
-def can_unlock_next_lesson(student, lesson):
+    if lesson.is_free:
+        return True
+
+
     homework = Homework.objects.filter(lesson=lesson).first()
 
     if not homework:
         return True
 
-    submission = Submission.objects.filter(
+
+    return Submission.objects.filter(
         homework=homework,
-        student=student,
-        status='approved'
-    ).first()
-
-    return submission is not None
-
-from .models import Submission, Homework, Lesson
-
-
-def is_lesson_unlocked(student, lesson):
-
-    if lesson.order == 1:
-        return True
-
-    prev_lesson = Lesson.objects.filter(
-        course=lesson.course,
-        order=lesson.order - 1
-    ).first()
-
-    if not prev_lesson:
-        return True
-
-    homework = Homework.objects.filter(lesson=prev_lesson).first()
-    if not homework:
-        return True
-
-    submission = Submission.objects.filter(
-        homework=homework,
-        student=student,
+        student=user,
         status='approved'
     ).exists()
 
-    return submission
+def unlock_lesson(user, lesson):
+    """
+    Lesson ochilganda progress yoziladi
+    """
+
+    Progress.objects.update_or_create(
+        student=user,
+        lesson=lesson,
+        defaults={
+            "is_completed": True,
+            "is_unlocked": True
+        }
+    )
+
+from .models import Enrollment
 
 
+def is_enrolled(user, course):
+    return Enrollment.objects.filter(
+        student=user,
+        course=course
+    ).exists()
+
+from .models import Progress
+from courses.models import Lesson
+
+
+def get_next_lesson(course, current_lesson):
+    return Lesson.objects.filter(
+        course=course,
+        order__gt=current_lesson.order
+    ).order_by('order').first()
+
+def unlock_lesson(student, lesson):
+    Progress.objects.update_or_create(
+        student=student,
+        lesson=lesson,
+        defaults={
+            "is_unlocked": True,
+            "is_completed": True
+        }
+    )
+
+from courses.models import Lesson
 from .models import Progress
 
 
-def mark_progress(student, lesson):
-    obj, created = Progress.objects.get_or_create(
-        student=student,
-        lesson=lesson
-    )
-    obj.is_completed = True
-    obj.save()
+def get_course_progress(user, course):
+    lessons = Lesson.objects.filter(course=course)
+    total = lessons.count()
+
+    completed = Progress.objects.filter(
+        student=user,
+        lesson__course=course,
+        is_completed=True
+    ).count()
+
+    if total == 0:
+        return 0
+
+    return int((completed / total) * 100)
+
+def is_course_completed(user, course):
+    return get_course_progress(user, course) == 100
+

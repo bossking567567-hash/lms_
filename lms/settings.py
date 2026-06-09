@@ -41,9 +41,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'accounts',
     'courses',
-    'learning',
-
     'drf_yasg',
+    'learning.apps.LearningConfig',
 ]
 
 MIDDLEWARE = [
@@ -78,6 +77,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'lms.wsgi.application'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+}
+
+
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -95,7 +105,16 @@ REST_FRAMEWORK = {
     ),
 }
 
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'lms_db',
+        'USER': 'postgres',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

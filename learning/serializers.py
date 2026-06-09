@@ -1,14 +1,5 @@
 from rest_framework import serializers
-from .models import Lesson
-
-
-class LessonSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Lesson
-        fields = '__all__'
-
-
-from .models import Homework, Submission
+from .models import Homework, Submission, Progress
 
 
 class HomeworkSerializer(serializers.ModelSerializer):
@@ -16,7 +7,26 @@ class HomeworkSerializer(serializers.ModelSerializer):
         model = Homework
         fields = '__all__'
 
+
 class SubmissionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Submission
         fields = '__all__'
+        read_only_fields = ['student', 'status']
+
+
+class ProgressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Progress
+        fields = '__all__'
+        read_only_fields = ['student']
+
+from rest_framework import serializers
+from .models import Enrollment
+
+
+class EnrollmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Enrollment
+        fields = '__all__'
+        read_only_fields = ['student']
