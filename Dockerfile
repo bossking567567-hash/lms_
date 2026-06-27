@@ -3,8 +3,11 @@ FROM python:3.11
 WORKDIR /app
 
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+RUN python manage.py migrate
+
+CMD ["gunicorn", "lms.wsgi:application", "--bind", "0.0.0.0:8000"]
