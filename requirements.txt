@@ -2,6 +2,6 @@ Django
 djangorestframework
 djangorestframework-simplejwt
 drf-yasg
-psycopg2
 gunicorn
 reportlab
+whitenoise
