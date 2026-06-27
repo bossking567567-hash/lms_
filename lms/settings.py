@@ -1,23 +1,25 @@
 from pathlib import Path
 from datetime import timedelta
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 SECRET_KEY = 'django-insecure-c9#up!=*m3z-f$3rpfslo!nn3lnrd4#+kf#so&%8)wcidg=ekt'
 
+
 DEBUG = False
 
 
 ALLOWED_HOSTS = [
-    "lms-3-s43b.onrender.com",
+    "lms-4-b5os.onrender.com",
     "localhost",
     "127.0.0.1",
 ]
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://lms-3-s43b.onrender.com",
+    "https://lms-4-b5os.onrender.com",
 ]
 
 
@@ -93,7 +95,6 @@ AUTH_USER_MODEL = 'accounts.User'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
@@ -122,28 +123,6 @@ SIMPLE_JWT = {
 
 
 
-AUTH_PASSWORD_VALIDATORS = [
-
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-
-]
-
-
-
 LANGUAGE_CODE = 'en-us'
 
 
@@ -157,7 +136,7 @@ USE_TZ = True
 
 
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
