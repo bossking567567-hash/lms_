@@ -14,19 +14,16 @@ def perform_create(self, serializer):
     serializer.save(created_by=self.request.user)
 
 
-    class RegisterView(generics.CreateAPIView):
-        serializer_class = RegisterSerializer
 
 from django.core.mail import send_mail
 from django.contrib.auth import get_user_model
 from rest_framework.views import APIView
-from rest_framework.response import Response
 import random
 
 User = get_user_model()
 
 
-# 1. SEND RESET CODE
+
 class SendResetCodeView(APIView):
     def post(self, request):
         email = request.data.get("email")

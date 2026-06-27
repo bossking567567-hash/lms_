@@ -35,10 +35,10 @@ class Lesson(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True, null=True)
 
-    # 🔥 VIDEO
+
     video_url = models.URLField(blank=True, null=True)
 
-    # 📄 FILE (PDF, DOC)
+
     file = models.FileField(upload_to='lessons/', blank=True, null=True)
 
     order = models.IntegerField(default=0)
