@@ -27,7 +27,7 @@ DEBUG = True
 
 
 ALLOWED_HOSTS = [
-    "lms-gqum.onrender.com",
+    "lms-za0b.onrender.com",
     "localhost",
     "127.0.0.1",
 ]
