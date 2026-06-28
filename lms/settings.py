@@ -7,15 +7,19 @@ SECRET_KEY = 'django-insecure-c9#up!=*m3z-f$3rpfslo!nn3lnrd4#+kf#so&%8)wcidg=ekt
 
 DEBUG = False
 
-# Render silkangiz aniq ko'rsatildi
+
 ALLOWED_HOSTS = [
+    "lms-1-coa7.onrender.com",
     "lms-5-zgor.onrender.com",
     "lms-4-b5os.onrender.com",
+    ".onrender.com",
     "localhost",
     "127.0.0.1",
 ]
 
+
 CSRF_TRUSTED_ORIGINS = [
+    "https://lms-1-coa7.onrender.com",
     "https://lms-5-zgor.onrender.com",
     "https://lms-4-b5os.onrender.com",
 ]
